@@ -29,6 +29,15 @@ class Settings:
         pygame.mixer.init()  # Inicializa o mixer para áudio
         self.load_sounds()
 
+        #MULTIPLAYER
+        self.server = None
+        self.client = None
+        self.client_connected = False
+        self.multiplayer = False 
+        self.client_socket = None
+        self.server_socket = None
+        self.size = 1024
+
 
     def setup_fonts(self):
         try:
@@ -77,8 +86,10 @@ class Settings:
             # Carrega a trilha sonora e o som de colisão
             self.music = pygame.mixer.Sound("Project/sound/trilha.mp3")
             self.music.set_volume(0.6)  
-            self.collision_sound = pygame.mixer.Sound("Project/sound/gota-agua.mp3")
+            self.collision_sound = pygame.mixer.Sound("Project/sound/agua-cafe.wav")
             self.collision_sound.set_volume(0.8)
+            self.menu_sound = pygame.mixer.Sound("Project/sound/menu.wav")
+            self.menu_sound.set_volume(0.8)
         except pygame.error as e:
             print("Erro ao carregar som: {e}")
             self.background_music = None
@@ -87,6 +98,12 @@ class Settings:
     def play_background_music(self):
         if self.music:
             self.music.play(-1) 
+
+    def stop_background_music(self):
+        if self.music:
+            self.music.stop() 
             
     def get_screen(self):
         return self.screen
+
+settings = Settings()

@@ -3,10 +3,15 @@ import random
 from .Settings import Settings
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, settings):
+    def __init__(self, settings,is_player_2=False):
         super().__init__()
         self.settings = settings  # Armazena as configurações recebidas
-        self.image = pygame.image.load('Project/images/coffee-skin.png').convert_alpha()
+        
+        if is_player_2:
+            self.image = pygame.image.load('Project/images/coffee-skin-2.png').convert_alpha()
+        else:
+            self.image = pygame.image.load('Project/images/coffee-skin.png').convert_alpha()
+
         cup_width = int(self.settings.WIDTH * 0.0525)
         cup_height = int(self.settings.HEIGHT * 0.0483)
         self.image = pygame.transform.scale(self.image, (cup_width, cup_height))
@@ -18,8 +23,10 @@ class Player(pygame.sprite.Sprite):
         self.gravity = self.settings.HEIGHT * 0.0017
         self.is_jumping = False
 
-    def move(self):
-        keys = pygame.key.get_pressed()
+    def move(self,keys=None):
+        if keys is None:
+            pass
+        #keys = pygame.key.get_pressed()
         
         # Movimento lateral
         if keys[pygame.K_LEFT]:
